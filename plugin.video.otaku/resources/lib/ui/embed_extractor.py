@@ -4,9 +4,9 @@ import random
 import re
 import string
 import time
-
 import six
-from resources.lib.ui import client, control, jsunpack
+
+from resources.lib.ui import client, control, database, jsunpack
 from resources.lib.ui.pyaes import AESModeOfOperationCBC, Decrypter, Encrypter
 from six.moves import urllib_error, urllib_parse
 
@@ -126,6 +126,58 @@ def __extract_mp4upload(url, page_content, referer=None):
     return
 
 
+def __extract_vidplay(url, page_content, referer=None):
+    def dex(key, data, encode=True):
+        x = 0
+        ct = ''
+        y = list(range(256))
+        for r in range(256):
+            u = key[r % len(key)]
+            x = (x + y[r] + (u if isinstance(u, int) else ord(u))) % 256
+            y[r], y[x] = y[x], y[r]
+
+        s = 0
+        x = 0
+        for r in range(len(data)):
+            s = (s + 1) % 256
+            x = (x + y[s]) % 256
+            y[s], y[x] = y[x], y[s]
+            ct += chr((data[r] if isinstance(data[r], int) else ord(data[r])) ^ y[(y[s] + y[x]) % 256])
+
+        if encode:
+            ct = six.ensure_str(base64.b64encode(six.b(ct))).replace('/', '_').replace('+', '-')
+
+        return ct
+
+    def encode_id(id_):
+        keys = database.get(
+            client.request, 0.2,
+            'https://raw.githubusercontent.com/Claudemirovsky/worstsource-keys/keys/keys.json'
+        )
+        k1, k2 = json.loads(keys)
+        v = dex(k1, id_, False)
+        v = dex(k2, v)
+        return v
+
+    headers = {'User-Agent': _EDGE_UA}
+    turl = urllib_parse.urljoin(url, '/futoken')
+    r = six.ensure_str(client.request(turl, referer=url, headers=headers))
+    k = re.search(r"var\s*k='([^']+)", r)
+    if k:
+        v = encode_id(url.split('?')[0].split('/')[-1])
+        k = k.group(1)
+        a = [k]
+        for i in range(len(v)):
+            a.append(str(ord(k[i % len(k)]) + ord(v[i])))
+        murl = urllib_parse.urljoin(url, '/mediainfo/' + ','.join(a) + '?' + url.split('?')[-1])
+        s = json.loads(client.request(murl, referer=url, XHR=True, headers=headers))
+        if isinstance(s.get('result'), dict):
+            uri = s.get('result').get('sources')[0].get('file')
+            rurl = urllib_parse.urljoin(murl, '/')
+            uri += '|Referer={0}&Origin={1}&User-Agent=iPad'.format(rurl, rurl[:-1])
+            return uri
+
+
 def __extract_kwik(url, page_content, referer=None):
     page_content += __get_packed_data(page_content)
     r = re.search(r"const\s*source\s*=\s*'([^']+)", page_content)
@@ -190,7 +242,7 @@ def __extract_dood(url, page_content, referer=None):
         t = string.ascii_letters + string.digits
         return pdata + ''.join([random.choice(t) for _ in range(10)])
 
-    pattern = r'(?://|\.)(dood(?:stream)?\.(?:com?|watch|to|s[ho]|cx|la|w[sf]|pm))/(?:d|e)/([0-9a-zA-Z]+)'
+    pattern = r'(?://|\.)((?:do*ds?(?:tream)?|ds2(?:play|video))\.(?:com?|watch|to|s[ho]|cx|la|w[sf]|pm|re|yt|stream|pro))/(?:d|e)/([0-9a-zA-Z]+)'
     match = re.search(r'''dsplayer\.hotkeys[^']+'([^']+).+?function\s*makePlay.+?return[^?]+([^"]+)''', page_content, re.DOTALL)
     if match:
         host, media_id = re.findall(pattern, url)[0]
@@ -249,7 +301,7 @@ def __extract_goload(url, page_content, referer=None):
         decrypted += decrypter.feed()
         return six.ensure_str(decrypted)
 
-    pattern = r'(?://|\.)((?:gogo-(?:play|stream)|streamani|goload|gogohd|vidstreaming|gembedhd|playgo1|anihdplay|playtaku|gotaku1|goone)\.' \
+    pattern = r'(?://|\.)((?:gogo-(?:play|stream)|streamani|go(?:load|one|gohd)|vidstreaming|gembedhd|playgo1|anihdplay|(?:play|emb|go)taku1?)\.' \
               r'(?:io|pro|net|com|cc|online))/(?:streaming|embed(?:plus)?|ajax|load)(?:\.php)?\?id=([a-zA-Z0-9-]+)'
     r = re.search(r'crypto-js\.js.+?data-value="([^"]+)', page_content)
     if r:
@@ -313,6 +365,10 @@ __register_extractor(["https://www.mp4upload.com/",
                       "https://mp4upload.com/"],
                      __extract_mp4upload)
 
+__register_extractor(["https://vidplay.online/",
+                      "https://mcloud.bz/"],
+                     __extract_vidplay)
+
 __register_extractor(["https://kwik.cx/"],
                      __extract_kwik)
 
@@ -339,13 +395,28 @@ __register_extractor(["https://ok.ru/",
                      __extract_okru)
 
 __register_extractor(["https://dood.wf/",
-                      "https://dood.pm/"],
+                      "https://dood.pm/",
+                      "https://dood.cx/",
+                      "https://dood.la/",
+                      "https://dood.ws/",
+                      "https://dood.so/",
+                      "https://dood.to/",
+                      "https://dood.sh/",
+                      "https://dood.re/",
+                      "https://dood.yt/",
+                      "https://dood.stream/",
+                      "https://dood.watch/",
+                      "https://doods.pro/",
+                      "https://dooood.com/",
+                      "https://doodstream.com/",
+                      "https://ds2play.com/",
+                      "https://ds2video.com/"],
                      __extract_dood)
 
-__register_extractor(["https://gogo-stream.com",
-                      "https://gogo-play.net",
-                      "https://streamani.net",
-                      "https://goload.one"
+__register_extractor(["https://gogo-stream.com/",
+                      "https://gogo-play.net/",
+                      "https://streamani.net/",
+                      "https://goload.one/"
                       "https://goload.io/",
                       "https://goload.pro/",
                       "https://gogohd.net/",
@@ -356,7 +427,8 @@ __register_extractor(["https://gogo-stream.com",
                       "https://playtaku.net/",
                       "https://playtaku.online/",
                       "https://gotaku1.com/",
-                      "https://goone.pro"],
+                      "https://goone.pro/",
+                      "https://embtaku.pro/"],
                      __extract_goload)
 
 __register_extractor(["https://streamtape.com/e/"],
