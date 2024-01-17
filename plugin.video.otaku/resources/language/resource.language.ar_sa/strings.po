@@ -100,18 +100,20 @@ msgid "[B]افتح الوصلة في المُتصفح: [COLOR deepskyblue]https:
 
 msgctxt "#40101"
 msgid "[B]After authorizing, MAL will redirect to its homepage. Copy & paste the redirect url (e.g. url [COLOR deepskyblue]https://myanimelist.net/?code=...[/COLOR]) below.[/B]"
-msgid "[B]بعد التوثيق, MAL سينقلك لصفتحته. الرجاء نسخ ولصق  url (e.g. url [COLOR deepskyblue]https://myanimelist.net/?code=...[/COLOR]) below.[/B]"
+msgstr "[B]بعد التوثيق, MAL سينقلك لصفتحته. الرجاء نسخ ولصق  url (e.g. url [COLOR deepskyblue]https://myanimelist.net/?code=...[/COLOR]) below.[/B]"
+
 msgctxt "#40105"
 msgid "[B]Open this link in a browser: [COLOR deepskyblue]https://armkai.vercel.app/api/anilist[/COLOR][/B]"
 msgstr "[B]افتح الوصلة في المُتصفح: [COLOR deepskyblue]https://armkai.vercel.app/api/anilist[/COLOR][/B]"
 
 msgctxt "#40106"
 msgid "[B]After authorizing, copy & paste the token below.[/B]"
-msgid "[Bبعد التوثيق، قم بنسخ ولصق الرمز بالاسفل[/B]"
+msgstr "[Bبعد التوثيق، قم بنسخ ولصق الرمز بالاسفل[/B]"
 
 msgctxt "#40110"
 msgid "[B]*Note: If using addon on Amazon Fire TV Stick/Android TV Box, you can copy & paste text using a Kodi remote app like [COLOR limegreen]Kore[/COLOR] or [COLOR limegreen]Yatse[/COLOR][/B]"
-msgid "[B]*ملاحظة: ان كنت تسخدم الاضافة على Amazon Fire TV Stick/Android TV Box,   قم بنسخ ولصق باستخدام تطبيق كودي للريموت[COLOR limegreen]Kore[/COLOR] او [COLOR limegreen]Yatse[/COLOR][/B]"
+msgstr "[B]*ملاحظة: ان كنت تسخدم الاضافة على Amazon Fire TV Stick/Android TV Box,   قم بنسخ ولصق باستخدام تطبيق كودي للريموت[COLOR limegreen]Kore[/COLOR] او [COLOR limegreen]Yatse[/COLOR][/B]"
+
 msgctxt "#40221"
 msgid "Torrents"
 msgstr "تورنت"
@@ -947,23 +949,23 @@ msgstr "التصنيف حسب الحجم من المصدر"
 
 msgctxt "#40490"
 msgid "Internet Speed (Mbps)"
-msgid "سرعة اتصال (Mbps)"
+msgstr "سرعة اتصال (Mbps)"
 
 msgctxt "#40491"
 msgid "Movie Max Size (GB)"
-msgid "اقصى حد حجم ملف للفلم (GB)"
+msgstr "اقصى حد حجم ملف للفلم (GB)"
 
 msgctxt "#40492"
 msgid "Movie Min Size (GB)"
-msgid "اقل حجم ملف الفلم (GB)"
+msgstr "اقل حجم ملف الفلم (GB)"
 
 msgctxt "#40493"
 msgid "Episode Max Size (GB)"
-msgid "اقصى حد حجم ملف الحلقة (GB)"
+msgstr "اقصى حد حجم ملف الحلقة (GB)"
 
 msgctxt "#40494"
 msgid "Episode Min Size (GB)"
-msgid "اقل حجم ملف للحلقة (GB)"
+msgstr "اقل حجم ملف للحلقة (GB)"
 
 msgctxt "#40495"
 msgid "Use Kodi's Preferred Language Settings"
@@ -971,7 +973,7 @@ msgstr "استخدم لغة الترجمة من اعدادت اللغة  لكو�
 
 msgctxt "#40496"
 msgid "Terminate on Cloud Sources"
-msgid "Terminate on Cloud Sources"
+msgstr "Terminate on Cloud Sources"
 
 msgctxt "#40497"
 msgid "Off"
@@ -983,23 +985,23 @@ msgstr "سرعة النت"
 
 msgctxt "#40499"
 msgid "Hard Limit"
-msgid "Hard Limit"
+msgstr "Hard Limit"
 
 msgctxt "#40500"
 msgid "Hide BATCH Items"
-msgid "Hide BATCH Items"
+msgstr "Hide BATCH Items"
 
 msgctxt "#40501"
 msgid "Show Delete from Database in Context Menu"
-msgid "Show Delete from Database in Context Menu"
+msgstr "Show Delete from Database in Context Menu"
 
 msgctxt "#40502"
 msgid "Re-Use Language Invoker"
-msgid "Re-Use Language Invoker"
+msgstr "Re-Use Language Invoker"
 
 msgctxt "#40503"
 msgid "Toggle Re-Use Language Invoker:    [COLOR red]Faster speeds but some instability![/COLOR]"
-msgid "Toggle Re-Use Language Invoker:    [COLOR red]Faster speeds but some instability![/COLOR]"
+msgstr "Toggle Re-Use Language Invoker:    [COLOR red]Faster speeds but some instability![/COLOR]"
 
 msgctxt "#40504"
 msgid "Universal Sub Embeds (Will Be Based By Region)"
@@ -1039,7 +1041,7 @@ msgstr "تخصيص قائمة السياق"
 
 msgctxt "#40513"
 msgid "Show 'Marked as Watched [COLOR blue](Watchlist)[/COLOR]' in Context Menu"
-msgid "اظهر 'تمت مشاهدته [COLOR blue](Watchlist)[/COLOR]' في قائمة السياق"
+msgstr "اظهر 'تمت مشاهدته [COLOR blue](Watchlist)[/COLOR]' في قائمة السياق"
 
 msgctxt "#40514"
 msgid "Set Percent to Mark as Watched"
